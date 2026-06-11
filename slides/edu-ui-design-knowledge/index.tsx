@@ -151,7 +151,188 @@ Cover.transition = {
   enter: { duration: 280, delay: 100, easing: EO, keyframes: [{ opacity: 0, transform: 'translateY(12px)', filter: 'blur(4px)' }, { opacity: 1, transform: 'translateY(0)', filter: 'blur(0)' }] },
 };
 
-// ─── Page 2: 這個 repo 是什麼 ─────────────────────────────────────────────────
+// ─── Page 2: 為什麼需要 DESIGN.md ────────────────────────────────────────────
+// Budget (padding 120px T/B → usable 840px):
+// eyebrow 29 + gap 32 + heading 88 + gap 40 + body 62 + gap 48 + 3 cards ~272px = 571px ✅
+const ProblemCard = ({ icon, title, desc }: { icon: string; title: string; desc: string }) => (
+  <div
+    style={{
+      flex: 1,
+      background: c.surface,
+      border: `1px solid ${c.border}`,
+      borderRadius: 'var(--osd-radius)',
+      padding: '28px 28px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 12,
+    }}
+  >
+    <div style={{ fontSize: 40 }}>{icon}</div>
+    <div style={{ fontFamily: font.display, fontSize: 36, fontWeight: 600, lineHeight: 1.2 }}>{title}</div>
+    <div style={{ fontSize: 30, lineHeight: 1.5, color: c.textSoft }}>{desc}</div>
+  </div>
+);
+
+const Why: Page = () => (
+  <div style={fill}>
+    <Anim />
+    <Grid />
+    <div style={{ position: 'absolute', inset: 0, padding: '120px 140px', display: 'flex', flexDirection: 'column' }}>
+      <div className="fu" style={{ fontFamily: font.mono, fontSize: 24, letterSpacing: '0.15em', textTransform: 'uppercase', color: c.muted, marginBottom: 32 }}>
+        01 / 為什麼
+      </div>
+      <h2 className="fu" style={{ fontFamily: 'var(--osd-font-display)', fontSize: 80, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.03em', margin: '0 0 40px', animationDelay: '0.1s' }}>
+        AI 做 UI 時，設計規則在哪？
+      </h2>
+      <p className="fu" style={{ fontSize: 38, lineHeight: 1.55, color: c.textSoft, maxWidth: 1400, margin: '0 0 48px', animationDelay: '0.2s' }}>
+        設計決策分散在不同系統——AI 看不到，每次都要重新解釋，輸出品質難以穩定。
+      </p>
+      <div className="fu" style={{ display: 'flex', gap: 24, animationDelay: '0.3s' }}>
+        <ProblemCard
+          icon="🗂"
+          title="設計規則分散各地"
+          desc="Figma、VSDS Foundation、元件庫——沒有統一入口，AI 無法直接讀取"
+        />
+        <ProblemCard
+          icon="🔁"
+          title="每次都要重新解釋"
+          desc="哪些 token 可用、哪些元件適合——協作時每次都得手動告知"
+        />
+        <ProblemCard
+          icon="⚠️"
+          title="輸出不穩定"
+          desc="缺乏一致的設計 context，AI 只能猜——錯誤 token、錯誤間距、大量修正"
+        />
+      </div>
+    </div>
+    <Footer />
+  </div>
+);
+
+// ─── Page 3: Google 的定義 ───────────────────────────────────────────────────
+// Budget (padding 120px T/B → usable 840px):
+// eyebrow 29 + gap 32 + heading 88 + gap 40 + body 64 + gap 40 + 3 bullets 228px = 521px ✅
+const GoogleSpec: Page = () => (
+  <div style={fill}>
+    <Anim />
+    <Grid />
+    <div style={{ position: 'absolute', inset: 0, padding: '120px 140px', display: 'flex', flexDirection: 'column' }}>
+      <div className="fu" style={{ fontFamily: font.mono, fontSize: 24, letterSpacing: '0.15em', textTransform: 'uppercase', color: c.muted, marginBottom: 32 }}>
+        02 / Google DESIGN.md
+      </div>
+      <h2 className="fu" style={{ fontFamily: 'var(--osd-font-display)', fontSize: 80, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.03em', margin: '0 0 40px', animationDelay: '0.1s' }}>
+        README.md 給人看；DESIGN.md 給 AI 看
+      </h2>
+      <p className="fu" style={{ fontSize: 38, lineHeight: 1.55, color: c.textSoft, maxWidth: 1500, margin: '0 0 40px', animationDelay: '0.2s' }}>
+        Google Labs 從 AI 設計工具 Stitch 發展出這個開源格式，2026 年開源——讓 AI coding agent 能真正理解設計意圖，而不是只知道數值。
+      </p>
+      <div className="fu" style={{ display: 'flex', flexDirection: 'column', gap: 20, animationDelay: '0.3s' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 20 }}>
+          <span style={{ color: 'var(--osd-accent)', fontSize: 36, lineHeight: 1.5, flexShrink: 0 }}>→</span>
+          <span style={{ fontSize: 38, lineHeight: 1.5 }}>純文字、Git 版控、任何 AI agent 都能讀</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 20 }}>
+          <span style={{ color: 'var(--osd-accent)', fontSize: 36, lineHeight: 1.5, flexShrink: 0 }}>→</span>
+          <span style={{ fontSize: 38, lineHeight: 1.5 }}>不依賴特定工具，不需要 Figma plugin 或 build pipeline</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 20 }}>
+          <span style={{ color: 'var(--osd-accent)', fontSize: 36, lineHeight: 1.5, flexShrink: 0 }}>→</span>
+          <span style={{ fontSize: 38, lineHeight: 1.5 }}>設計師寫，開發者和 AI 都受益</span>
+        </div>
+      </div>
+    </div>
+    <Footer />
+  </div>
+);
+
+// ─── Page 4: DESIGN.md 的結構 ────────────────────────────────────────────────
+// Budget (padding 120px T/B → usable 840px):
+// eyebrow 29 + gap 32 + heading 88 + gap 40 + insight 58 + gap 40 + two-col ~270px = 557px ✅
+const StructureBlock = ({ label, tag, items, color }: { label: string; tag: string; items: string[]; color: string }) => (
+  <div
+    style={{
+      flex: 1,
+      background: c.surface,
+      border: `1px solid ${c.border}`,
+      borderRadius: 'var(--osd-radius)',
+      padding: '28px 32px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 18,
+    }}
+  >
+    <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+      <div
+        style={{
+          fontFamily: font.mono,
+          fontSize: 20,
+          letterSpacing: '0.06em',
+          color,
+          background: `${color}14`,
+          border: `1px solid ${color}30`,
+          borderRadius: 6,
+          padding: '5px 12px',
+        }}
+      >
+        {tag}
+      </div>
+      <div style={{ fontFamily: 'var(--osd-font-display)', fontSize: 36, fontWeight: 600 }}>{label}</div>
+    </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      {items.map((item) => (
+        <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
+          <span style={{ width: 6, height: 6, borderRadius: '50%', background: color, flexShrink: 0, marginTop: 14 }} />
+          <span style={{ fontFamily: font.mono, fontSize: 28, lineHeight: 1.45, color: c.textSoft }}>{item}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+const DesignMdFormat: Page = () => (
+  <div style={fill}>
+    <Anim />
+    <Grid />
+    <div style={{ position: 'absolute', inset: 0, padding: '120px 140px', display: 'flex', flexDirection: 'column' }}>
+      <div className="fu" style={{ fontFamily: font.mono, fontSize: 24, letterSpacing: '0.15em', textTransform: 'uppercase', color: c.muted, marginBottom: 32 }}>
+        03 / 格式
+      </div>
+      <h2 className="fu" style={{ fontFamily: 'var(--osd-font-display)', fontSize: 80, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.03em', margin: '0 0 40px', animationDelay: '0.1s' }}>
+        Token 值 ＋ 使用規則，缺一不可
+      </h2>
+      <p className="fu" style={{ fontSize: 36, lineHeight: 1.5, color: c.textSoft, maxWidth: 1500, margin: '0 0 40px', animationDelay: '0.15s' }}>
+        <span style={{ fontFamily: font.mono, color: 'var(--osd-accent)' }}>tokens.json</span> 只能說「是什麼」——DESIGN.md 同時說「為什麼」和「怎麼用」
+      </p>
+      <div className="fu" style={{ display: 'flex', gap: 28, animationDelay: '0.25s' }}>
+        <StructureBlock
+          tag="YAML front matter"
+          label="機器可讀的精確數值"
+          color={c.green}
+          items={[
+            'colors: primary #7c6ef5',
+            'typography: body 16px / 1.5',
+            'spacing: md 16px, lg 24px',
+            'radius: card 12px',
+          ]}
+        />
+        <StructureBlock
+          tag="Markdown prose"
+          label="AI 和人都能讀的規則"
+          color="var(--osd-accent)"
+          items={[
+            'Colors — primary 只用於互動元素',
+            'Typography — 中文不用 Thin / Light',
+            'Layout — Content-First，不以對齊為目的',
+            "Do's & Don'ts — 明確的禁止項目",
+          ]}
+        />
+      </div>
+    </div>
+    <Footer />
+  </div>
+);
+
+// ─── Page 5: 這個 repo 是什麼 ─────────────────────────────────────────────────
 // Budget (padding 120px T/B → usable 840px):
 // eyebrow 29 + gap 32 + heading 88 + gap 56 + body 62 + gap 48 + 2 bullets (54+20+54) = 443px ✅
 const WhatIsIt: Page = () => (
@@ -160,7 +341,7 @@ const WhatIsIt: Page = () => (
     <Grid />
     <div style={{ position: 'absolute', inset: 0, padding: '120px 140px', display: 'flex', flexDirection: 'column' }}>
       <div className="fu" style={{ fontFamily: font.mono, fontSize: 24, letterSpacing: '0.15em', textTransform: 'uppercase', color: c.muted, marginBottom: 32 }}>
-        01 / 定位
+        04 / 定位
       </div>
       <h2 className="fu" style={{ fontFamily: 'var(--osd-font-display)', fontSize: 80, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.03em', margin: '0 0 56px', animationDelay: '0.1s' }}>
         一個 AI 看得懂的設計知識層
@@ -232,7 +413,7 @@ const Structure: Page = () => (
     <Grid />
     <div style={{ position: 'absolute', inset: 0, padding: '120px 140px', display: 'flex', flexDirection: 'column' }}>
       <div className="fu" style={{ fontFamily: font.mono, fontSize: 24, letterSpacing: '0.15em', textTransform: 'uppercase', color: c.muted, marginBottom: 32 }}>
-        02 / 結構
+        05 / 結構
       </div>
       <h2 className="fu" style={{ fontFamily: 'var(--osd-font-display)', fontSize: 80, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.03em', margin: '0 0 48px', animationDelay: '0.1s' }}>
         四個知識層
@@ -272,7 +453,7 @@ const AutoVsManual: Page = () => (
     <Grid />
     <div style={{ position: 'absolute', inset: 0, padding: '120px 140px', display: 'flex', flexDirection: 'column' }}>
       <div className="fu" style={{ fontFamily: font.mono, fontSize: 24, letterSpacing: '0.15em', textTransform: 'uppercase', color: c.muted, marginBottom: 32 }}>
-        03 / 維護
+        06 / 維護
       </div>
       <h2 className="fu" style={{ fontFamily: 'var(--osd-font-display)', fontSize: 80, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.03em', margin: '0 0 48px', animationDelay: '0.1s' }}>
         哪些要手動、哪些自動產生
@@ -349,7 +530,7 @@ const HowToUpdate: Page = () => (
     <Grid />
     <div style={{ position: 'absolute', inset: 0, padding: '120px 140px', display: 'flex', flexDirection: 'column' }}>
       <div className="fu" style={{ fontFamily: font.mono, fontSize: 24, letterSpacing: '0.15em', textTransform: 'uppercase', color: c.muted, marginBottom: 32 }}>
-        04 / 更新流程
+        07 / 更新流程
       </div>
       <h2 className="fu" style={{ fontFamily: 'var(--osd-font-display)', fontSize: 80, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.03em', margin: '0 0 48px', animationDelay: '0.1s' }}>
         跟 Claude Code 說，或直接下指令
@@ -409,7 +590,7 @@ const Hooks: Page = () => (
     <Grid />
     <div style={{ position: 'absolute', inset: 0, padding: '120px 140px', display: 'flex', flexDirection: 'column' }}>
       <div className="fu" style={{ fontFamily: font.mono, fontSize: 24, letterSpacing: '0.15em', textTransform: 'uppercase', color: c.muted, marginBottom: 32 }}>
-        05 / 自動化
+        08 / 自動化
       </div>
       <h2 className="fu" style={{ fontFamily: 'var(--osd-font-display)', fontSize: 80, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.03em', margin: '0 0 48px', animationDelay: '0.1s' }}>
         Claude Code 幫你把關的三件事
@@ -450,7 +631,7 @@ const Changelog: Page = () => (
     <Grid />
     <div style={{ position: 'absolute', inset: 0, padding: '120px 140px', display: 'flex', flexDirection: 'column' }}>
       <div className="fu" style={{ fontFamily: font.mono, fontSize: 24, letterSpacing: '0.15em', textTransform: 'uppercase', color: c.muted, marginBottom: 32 }}>
-        06 / CHANGELOG
+        09 / CHANGELOG
       </div>
       <h2 className="fu" style={{ fontFamily: 'var(--osd-font-display)', fontSize: 80, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.03em', margin: '0 0 48px', animationDelay: '0.1s' }}>
         什麼時候要記錄
@@ -523,4 +704,4 @@ export const meta: SlideMeta = {
   createdAt: '2026-06-11T17:26:09.678Z',
 };
 
-export default [Cover, WhatIsIt, Structure, AutoVsManual, HowToUpdate, Hooks, Changelog, Closing] satisfies Page[];
+export default [Cover, Why, GoogleSpec, DesignMdFormat, WhatIsIt, Structure, AutoVsManual, HowToUpdate, Hooks, Changelog, Closing] satisfies Page[];
