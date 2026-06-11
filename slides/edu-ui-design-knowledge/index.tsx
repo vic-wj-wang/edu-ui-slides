@@ -1,0 +1,526 @@
+import type { DesignSystem, Page, SlideMeta, SlideTransition } from '@open-slide/core';
+import { useSlidePageNumber } from '@open-slide/core';
+
+// ─── Design system tokens ────────────────────────────────────────────────────
+export const design: DesignSystem = {
+  palette: {
+    bg: '#080d1c',
+    text: '#e2e6f5',
+    accent: '#7c6ef5',
+  },
+  fonts: {
+    display: '"SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+    body: '"SF Pro Text", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+  },
+  typeScale: {
+    hero: 136,
+    body: 40,
+  },
+  radius: 14,
+};
+
+// ─── Local constants ─────────────────────────────────────────────────────────
+const c = {
+  surface: '#0e1428',
+  muted: '#5a6080',
+  textSoft: '#a8b0d0',
+  border: 'rgba(124, 110, 245, 0.12)',
+  borderBright: 'rgba(124, 110, 245, 0.28)',
+  green: '#34d399',
+  amber: '#fbbf24',
+};
+
+const font = {
+  display: design.fonts.display,
+  body: design.fonts.body,
+  mono: '"JetBrains Mono", "SF Mono", ui-monospace, monospace',
+};
+
+const fill: React.CSSProperties = {
+  width: '100%',
+  height: '100%',
+  background: 'var(--osd-bg)',
+  color: 'var(--osd-text)',
+  fontFamily: 'var(--osd-font-body)',
+  overflow: 'hidden',
+  position: 'relative',
+};
+
+// ─── Shared animation styles (injected per page) ──────────────────────────────
+const animCss = `
+  @keyframes fu { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  .fu { opacity: 0; animation: fu 0.65s cubic-bezier(0,0,0.2,1) forwards; }
+`;
+const Anim = () => <style>{animCss}</style>;
+
+// ─── Grid background ──────────────────────────────────────────────────────────
+const Grid = () => (
+  <div
+    style={{
+      position: 'absolute',
+      inset: 0,
+      backgroundImage:
+        'linear-gradient(rgba(124,110,245,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(124,110,245,0.045) 1px, transparent 1px)',
+      backgroundSize: '80px 80px',
+      maskImage: 'radial-gradient(ellipse at 30% 40%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 70%)',
+      WebkitMaskImage: 'radial-gradient(ellipse at 30% 40%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 70%)',
+    }}
+  />
+);
+
+// ─── Page footer ──────────────────────────────────────────────────────────────
+const Footer = () => {
+  const { current, total } = useSlidePageNumber();
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        bottom: 56,
+        left: 140,
+        right: 140,
+        display: 'flex',
+        justifyContent: 'space-between',
+        fontFamily: font.mono,
+        fontSize: 22,
+        color: c.muted,
+        letterSpacing: '0.05em',
+      }}
+    >
+      <span>edu-ui-design-md</span>
+      <span>
+        {String(current).padStart(2, '0')} / {String(total).padStart(2, '0')}
+      </span>
+    </div>
+  );
+};
+
+// ─── Transitions ──────────────────────────────────────────────────────────────
+const EO = 'cubic-bezier(0,0,0.2,1)';
+const EI = 'cubic-bezier(0.4,0,1,1)';
+
+export const transition: SlideTransition = {
+  duration: 200,
+  exit: { duration: 140, easing: EI, keyframes: [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-4px)' }] },
+  enter: { duration: 200, delay: 80, easing: EO, keyframes: [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'translateY(0)' }] },
+};
+
+// ─── Page 1: Cover ───────────────────────────────────────────────────────────
+// Budget: padding 0/140px sides, content flex-centered → no overflow risk
+const Cover: Page = () => (
+  <div style={fill}>
+    <Anim />
+    <Grid />
+    <div
+      style={{
+        position: 'absolute',
+        inset: 0,
+        padding: '0 140px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+      }}
+    >
+      <div
+        className="fu"
+        style={{ fontFamily: font.mono, fontSize: 24, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--osd-accent)', marginBottom: 40, animationDelay: '0.05s' }}
+      >
+        edu-ui-design-md
+      </div>
+      <h1
+        className="fu"
+        style={{ fontFamily: 'var(--osd-font-display)', fontSize: 'var(--osd-size-hero)', fontWeight: 700, lineHeight: 1.05, letterSpacing: '-0.035em', margin: 0, animationDelay: '0.15s' }}
+      >
+        設計知識層
+        <br />
+        <span style={{ color: 'var(--osd-accent)' }}>維護指南</span>
+      </h1>
+      <p
+        className="fu"
+        style={{ marginTop: 56, fontSize: 40, lineHeight: 1.55, color: c.textSoft, maxWidth: 1200, animationDelay: '0.3s' }}
+      >
+        讓 AI 看懂設計規則——這個 repo 是什麼、誰來維護、怎麼更新。
+      </p>
+    </div>
+    <Footer />
+  </div>
+);
+
+Cover.transition = {
+  duration: 280,
+  exit: { duration: 160, easing: EI, keyframes: [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-6px)' }] },
+  enter: { duration: 280, delay: 100, easing: EO, keyframes: [{ opacity: 0, transform: 'translateY(12px)', filter: 'blur(4px)' }, { opacity: 1, transform: 'translateY(0)', filter: 'blur(0)' }] },
+};
+
+// ─── Page 2: 這個 repo 是什麼 ─────────────────────────────────────────────────
+// Budget (padding 120px T/B → usable 840px):
+// eyebrow 29 + gap 32 + heading 88 + gap 56 + body 62 + gap 48 + 2 bullets (54+20+54) = 443px ✅
+const WhatIsIt: Page = () => (
+  <div style={fill}>
+    <Anim />
+    <Grid />
+    <div style={{ position: 'absolute', inset: 0, padding: '120px 140px', display: 'flex', flexDirection: 'column' }}>
+      <div className="fu" style={{ fontFamily: font.mono, fontSize: 24, letterSpacing: '0.15em', textTransform: 'uppercase', color: c.muted, marginBottom: 32 }}>
+        01 / 定位
+      </div>
+      <h2 className="fu" style={{ fontFamily: 'var(--osd-font-display)', fontSize: 80, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.03em', margin: '0 0 56px', animationDelay: '0.1s' }}>
+        一個 AI 看得懂的設計知識層
+      </h2>
+      <p className="fu" style={{ fontSize: 40, lineHeight: 1.55, color: c.textSoft, maxWidth: 1400, margin: '0 0 48px', animationDelay: '0.2s' }}>
+        把分散的設計脈絡——Figma、VSDS token、元件文件——整理成 AI 能直接讀懂的格式。
+      </p>
+      <div className="fu" style={{ display: 'flex', flexDirection: 'column', gap: 20, animationDelay: '0.3s' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 20 }}>
+          <span style={{ color: 'var(--osd-accent)', fontSize: 36, lineHeight: 1.5, flexShrink: 0 }}>→</span>
+          <span style={{ fontSize: 40, lineHeight: 1.5 }}>AI 在產生 UI 前，應該讀哪些設計規則？</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 20 }}>
+          <span style={{ color: 'var(--osd-accent)', fontSize: 36, lineHeight: 1.5, flexShrink: 0 }}>→</span>
+          <span style={{ fontSize: 40, lineHeight: 1.5 }}>哪些是跨產品共用、哪些是產品層特有？</span>
+        </div>
+      </div>
+    </div>
+    <Footer />
+  </div>
+);
+
+// ─── Page 3: Repo 結構 ────────────────────────────────────────────────────────
+// Budget (padding 120px T/B → usable 840px):
+// eyebrow 29 + gap 32 + heading 88 + gap 48 + cards 240px = 437px ✅
+
+const LayerCard = ({ tag, title, desc, delay }: { tag: string; title: string; desc: string; delay: number }) => (
+  <div
+    className="fu"
+    style={{
+      animationDelay: `${delay}s`,
+      flex: 1,
+      background: c.surface,
+      border: `1px solid ${c.border}`,
+      borderRadius: 'var(--osd-radius)',
+      padding: '32px 28px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 16,
+    }}
+  >
+    <div
+      style={{
+        fontFamily: font.mono,
+        fontSize: 21,
+        letterSpacing: '0.1em',
+        color: 'var(--osd-accent)',
+        background: 'rgba(124,110,245,0.1)',
+        border: '1px solid rgba(124,110,245,0.28)',
+        padding: '6px 14px',
+        borderRadius: 6,
+        alignSelf: 'flex-start',
+      }}
+    >
+      {tag}
+    </div>
+    <div style={{ fontFamily: 'var(--osd-font-display)', fontSize: 38, fontWeight: 600, lineHeight: 1.2 }}>
+      {title}
+    </div>
+    <div style={{ fontSize: 30, lineHeight: 1.5, color: c.textSoft }}>
+      {desc}
+    </div>
+  </div>
+);
+
+const Structure: Page = () => (
+  <div style={fill}>
+    <Anim />
+    <Grid />
+    <div style={{ position: 'absolute', inset: 0, padding: '120px 140px', display: 'flex', flexDirection: 'column' }}>
+      <div className="fu" style={{ fontFamily: font.mono, fontSize: 24, letterSpacing: '0.15em', textTransform: 'uppercase', color: c.muted, marginBottom: 32 }}>
+        02 / 結構
+      </div>
+      <h2 className="fu" style={{ fontFamily: 'var(--osd-font-display)', fontSize: 80, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.03em', margin: '0 0 48px', animationDelay: '0.1s' }}>
+        四個知識層
+      </h2>
+      <div style={{ display: 'flex', gap: 24, flex: 1 }}>
+        <LayerCard tag="shared/" title="跨產品規則" desc="顏色、字型、間距、元件共通使用規範" delay={0.2} />
+        <LayerCard tag="products/" title="產品層規則" desc="Hub / myViewBoard 各自的設計規則與 token" delay={0.3} />
+        <LayerCard tag="mappings/" title="對照查表" desc="VSDS token 架構、icon 規則、Figma 元件 URL" delay={0.4} />
+        <LayerCard tag="components/" title="元件文件" desc="每個元件的 usage guidelines（自動產生）" delay={0.5} />
+      </div>
+    </div>
+    <Footer />
+  </div>
+);
+
+// ─── Page 4: 自動產生 vs 手動維護 ────────────────────────────────────────────
+// Budget (padding 120px T/B → usable 840px):
+// eyebrow 29 + gap 32 + heading 88 + gap 48 + grid 340px = 537px ✅
+
+const ManualRow = ({ text }: { text: string }) => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+    <span style={{ width: 8, height: 8, borderRadius: '50%', background: c.green, flexShrink: 0 }} />
+    <span style={{ fontFamily: font.mono, fontSize: 30, lineHeight: 1.5, color: c.textSoft }}>{text}</span>
+  </div>
+);
+
+const AutoRow = ({ text }: { text: string }) => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+    <span style={{ width: 8, height: 8, borderRadius: '50%', background: c.amber, flexShrink: 0 }} />
+    <span style={{ fontFamily: font.mono, fontSize: 30, lineHeight: 1.5, color: c.textSoft }}>{text}</span>
+  </div>
+);
+
+const AutoVsManual: Page = () => (
+  <div style={fill}>
+    <Anim />
+    <Grid />
+    <div style={{ position: 'absolute', inset: 0, padding: '120px 140px', display: 'flex', flexDirection: 'column' }}>
+      <div className="fu" style={{ fontFamily: font.mono, fontSize: 24, letterSpacing: '0.15em', textTransform: 'uppercase', color: c.muted, marginBottom: 32 }}>
+        03 / 維護
+      </div>
+      <h2 className="fu" style={{ fontFamily: 'var(--osd-font-display)', fontSize: 80, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.03em', margin: '0 0 48px', animationDelay: '0.1s' }}>
+        哪些要手動、哪些自動產生
+      </h2>
+      <div className="fu" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, animationDelay: '0.2s' }}>
+        <div style={{ background: c.surface, border: `1px solid ${c.borderBright}`, borderRadius: 'var(--osd-radius)', padding: '28px 32px', display: 'flex', flexDirection: 'column', gap: 20 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 4 }}>
+            <span style={{ width: 10, height: 10, borderRadius: '50%', background: c.green, flexShrink: 0 }} />
+            <span style={{ fontFamily: font.mono, fontSize: 24, letterSpacing: '0.06em', color: c.green }}>手動維護（可直接編輯）</span>
+          </div>
+          <ManualRow text="shared/DESIGN.md" />
+          <ManualRow text="products/*/DESIGN.md" />
+          <ManualRow text="mappings/vsds-tokens.md" />
+          <ManualRow text="mappings/icons.md" />
+        </div>
+        <div style={{ background: c.surface, border: `1px solid ${c.border}`, borderRadius: 'var(--osd-radius)', padding: '28px 32px', display: 'flex', flexDirection: 'column', gap: 20 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 4 }}>
+            <span style={{ width: 10, height: 10, borderRadius: '50%', background: c.amber, flexShrink: 0 }} />
+            <span style={{ fontFamily: font.mono, fontSize: 24, letterSpacing: '0.06em', color: c.amber }}>自動產生（勿手動修改）</span>
+          </div>
+          <AutoRow text="products/*/tokens.md" />
+          <AutoRow text="components/*.md" />
+          <AutoRow text="mappings/figma.md" />
+          <AutoRow text="assets/icons/" />
+        </div>
+      </div>
+    </div>
+    <Footer />
+  </div>
+);
+
+// ─── Page 5: 如何更新 ─────────────────────────────────────────────────────────
+// Budget (padding 120px T/B → usable 840px):
+// eyebrow 29 + gap 32 + heading 88 + gap 48 + 3 cards (flex-row) ~240px = 437px ✅
+
+const UpdateCard = ({ when, title, cmd, delay }: { when: string; title: string; cmd: string; delay: number }) => (
+  <div
+    className="fu"
+    style={{
+      animationDelay: `${delay}s`,
+      flex: 1,
+      background: c.surface,
+      border: `1px solid ${c.border}`,
+      borderRadius: 'var(--osd-radius)',
+      padding: '28px 28px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 14,
+    }}
+  >
+    <div style={{ fontFamily: font.mono, fontSize: 22, color: c.muted, letterSpacing: '0.04em' }}>{when}</div>
+    <div style={{ fontFamily: 'var(--osd-font-display)', fontSize: 36, fontWeight: 600, lineHeight: 1.2 }}>{title}</div>
+    <div
+      style={{
+        marginTop: 'auto',
+        fontFamily: font.mono,
+        fontSize: 26,
+        color: 'var(--osd-accent)',
+        background: 'rgba(124,110,245,0.08)',
+        border: '1px solid rgba(124,110,245,0.22)',
+        borderRadius: 8,
+        padding: '12px 16px',
+        wordBreak: 'break-all',
+      }}
+    >
+      {cmd}
+    </div>
+  </div>
+);
+
+const HowToUpdate: Page = () => (
+  <div style={fill}>
+    <Anim />
+    <Grid />
+    <div style={{ position: 'absolute', inset: 0, padding: '120px 140px', display: 'flex', flexDirection: 'column' }}>
+      <div className="fu" style={{ fontFamily: font.mono, fontSize: 24, letterSpacing: '0.15em', textTransform: 'uppercase', color: c.muted, marginBottom: 32 }}>
+        04 / 更新流程
+      </div>
+      <h2 className="fu" style={{ fontFamily: 'var(--osd-font-display)', fontSize: 80, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.03em', margin: '0 0 48px', animationDelay: '0.1s' }}>
+        跟 Claude Code 說，或直接下指令
+      </h2>
+      <div style={{ display: 'flex', gap: 24, flex: 1 }}>
+        <UpdateCard when="token 有更新時" title="更新 Token 對照表" cmd="generate-tokens.js hub" delay={0.2} />
+        <UpdateCard when="元件文件有更新時" title="更新元件文件" cmd="generate-component-docs.js --all" delay={0.3} />
+        <UpdateCard when="設計規則有調整時" title="直接編輯 DESIGN.md" cmd="products/hub/DESIGN.md" delay={0.4} />
+      </div>
+    </div>
+    <Footer />
+  </div>
+);
+
+// ─── Page 6: 自動化 Hooks ─────────────────────────────────────────────────────
+// Budget (padding 120px T/B → usable 840px):
+// eyebrow 29 + gap 32 + heading 88 + gap 48 + 3 rows × ~96px + 2 gaps × 32 = 197+64+416 = 480px ✅
+
+const HookRow = ({ tag, title, desc, delay }: { tag: string; title: string; desc: string; delay: number }) => (
+  <div
+    className="fu"
+    style={{
+      animationDelay: `${delay}s`,
+      display: 'flex',
+      gap: 36,
+      alignItems: 'flex-start',
+    }}
+  >
+    <div
+      style={{
+        fontFamily: font.mono,
+        fontSize: 20,
+        letterSpacing: '0.06em',
+        textTransform: 'uppercase',
+        color: 'var(--osd-accent)',
+        background: 'rgba(124,110,245,0.1)',
+        border: '1px solid rgba(124,110,245,0.28)',
+        borderRadius: 6,
+        padding: '8px 16px',
+        flexShrink: 0,
+        marginTop: 4,
+        whiteSpace: 'nowrap',
+      }}
+    >
+      {tag}
+    </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+      <div style={{ fontFamily: 'var(--osd-font-display)', fontSize: 38, fontWeight: 600, lineHeight: 1.2 }}>{title}</div>
+      <div style={{ fontSize: 32, lineHeight: 1.4, color: c.textSoft }}>{desc}</div>
+    </div>
+  </div>
+);
+
+const Hooks: Page = () => (
+  <div style={fill}>
+    <Anim />
+    <Grid />
+    <div style={{ position: 'absolute', inset: 0, padding: '120px 140px', display: 'flex', flexDirection: 'column' }}>
+      <div className="fu" style={{ fontFamily: font.mono, fontSize: 24, letterSpacing: '0.15em', textTransform: 'uppercase', color: c.muted, marginBottom: 32 }}>
+        05 / 自動化
+      </div>
+      <h2 className="fu" style={{ fontFamily: 'var(--osd-font-display)', fontSize: 80, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.03em', margin: '0 0 48px', animationDelay: '0.1s' }}>
+        Claude Code 幫你把關的三件事
+      </h2>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
+        <HookRow tag="Commit 時" title="不能直接 commit 到 main" desc="自動阻擋，提示先開 branch 再繼續" delay={0.2} />
+        <div style={{ height: 1, background: c.border }} />
+        <HookRow tag="Push 時" title="Branch 命名格式檢查" desc="名稱不符 {type}/{short-description} → 阻擋並提示 rename" delay={0.3} />
+        <div style={{ height: 1, background: c.border }} />
+        <HookRow tag="結束時" title="提醒確認文件是否同步" desc="有非文件檔案變動時，提示是否需要更新 README / CHANGELOG" delay={0.4} />
+      </div>
+    </div>
+    <Footer />
+  </div>
+);
+
+// ─── Page 7: 何時記 CHANGELOG ─────────────────────────────────────────────────
+// Budget (padding 120px T/B → usable 840px):
+// eyebrow 29 + gap 32 + heading 88 + gap 48 + two-col grid ~340px = 537px ✅
+
+const YesItem = ({ text }: { text: string }) => (
+  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 16 }}>
+    <span style={{ color: c.green, fontSize: 34, lineHeight: 1.5, flexShrink: 0 }}>✓</span>
+    <span style={{ fontSize: 34, lineHeight: 1.5, color: c.textSoft }}>{text}</span>
+  </div>
+);
+
+const NoItem = ({ text }: { text: string }) => (
+  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 16 }}>
+    <span style={{ color: c.muted, fontSize: 34, lineHeight: 1.5, flexShrink: 0 }}>✕</span>
+    <span style={{ fontSize: 34, lineHeight: 1.5, color: c.muted }}>{text}</span>
+  </div>
+);
+
+const Changelog: Page = () => (
+  <div style={fill}>
+    <Anim />
+    <Grid />
+    <div style={{ position: 'absolute', inset: 0, padding: '120px 140px', display: 'flex', flexDirection: 'column' }}>
+      <div className="fu" style={{ fontFamily: font.mono, fontSize: 24, letterSpacing: '0.15em', textTransform: 'uppercase', color: c.muted, marginBottom: 32 }}>
+        06 / CHANGELOG
+      </div>
+      <h2 className="fu" style={{ fontFamily: 'var(--osd-font-display)', fontSize: 80, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.03em', margin: '0 0 48px', animationDelay: '0.1s' }}>
+        什麼時候要記錄
+      </h2>
+      <div className="fu" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, animationDelay: '0.2s' }}>
+        <div style={{ background: c.surface, border: `1px solid ${c.borderBright}`, borderRadius: 'var(--osd-radius)', padding: '28px 32px', display: 'flex', flexDirection: 'column', gap: 20 }}>
+          <div style={{ fontFamily: font.mono, fontSize: 24, color: c.green, letterSpacing: '0.06em', marginBottom: 4 }}>要記的</div>
+          <YesItem text="Repo 結構有調整（新增 / 刪除資料夾）" />
+          <YesItem text="DESIGN.md 有重大內容更新" />
+          <YesItem text="新增或修改 script / skill" />
+          <YesItem text="做了重要決定，想留下原因" />
+        </div>
+        <div style={{ background: c.surface, border: `1px solid ${c.border}`, borderRadius: 'var(--osd-radius)', padding: '28px 32px', display: 'flex', flexDirection: 'column', gap: 20 }}>
+          <div style={{ fontFamily: font.mono, fontSize: 24, color: c.muted, letterSpacing: '0.06em', marginBottom: 4 }}>不用記的</div>
+          <NoItem text="Generated files 的例行更新" />
+          <NoItem text="小幅文字修正" />
+        </div>
+      </div>
+    </div>
+    <Footer />
+  </div>
+);
+
+// ─── Page 8: Closing ─────────────────────────────────────────────────────────
+// Budget: centered flex, total ~360px → no overflow risk
+const Closing: Page = () => (
+  <div style={fill}>
+    <Anim />
+    <Grid />
+    <div
+      style={{
+        position: 'absolute',
+        inset: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '0 160px',
+        textAlign: 'center',
+      }}
+    >
+      <div className="fu" style={{ fontFamily: font.mono, fontSize: 24, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--osd-accent)', marginBottom: 48, animationDelay: '0.05s' }}>
+        edu-ui-design-md
+      </div>
+      <h2
+        className="fu"
+        style={{ fontFamily: 'var(--osd-font-display)', fontSize: 100, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.035em', margin: '0 0 48px', animationDelay: '0.15s' }}
+      >
+        設計師更新，
+        <br />
+        <span style={{ color: 'var(--osd-accent)' }}>AI 就能懂。</span>
+      </h2>
+      <p className="fu" style={{ fontSize: 40, lineHeight: 1.6, color: c.textSoft, maxWidth: 1300, animationDelay: '0.3s' }}>
+        保持 DESIGN.md 更新，是讓 AI-assisted 設計流程正常運作最重要的一件事。
+      </p>
+    </div>
+    <Footer />
+  </div>
+);
+
+Closing.transition = {
+  duration: 460,
+  exit: { duration: 180, easing: EI, keyframes: [{ opacity: 1 }, { opacity: 0 }] },
+  enter: { duration: 240, delay: 300, easing: EO, keyframes: [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'translateY(0)' }] },
+};
+
+// ─── Meta & export ────────────────────────────────────────────────────────────
+export const meta: SlideMeta = {
+  title: 'edu-ui-design-md 維護指南',
+  createdAt: '2026-06-11T17:26:09.678Z',
+};
+
+export default [Cover, WhatIsIt, Structure, AutoVsManual, HowToUpdate, Hooks, Changelog, Closing] satisfies Page[];
