@@ -1,5 +1,6 @@
 import type { DesignSystem, Page, SlideMeta, SlideTransition } from '@open-slide/core';
 import { useSlidePageNumber } from '@open-slide/core';
+import repoScreenshot from '../../assets/repo-screenshot.png';
 
 // ─── Design system tokens ────────────────────────────────────────────────────
 export const design: DesignSystem = {
@@ -138,8 +139,22 @@ const Cover: Page = () => (
         className="fu"
         style={{ marginTop: 56, fontSize: 40, lineHeight: 1.55, color: c.textSoft, maxWidth: 1200, animationDelay: '0.3s' }}
       >
-        讓 AI 看懂設計規則——這個 repo 是什麼、誰來維護、怎麼更新。
+        讓 AI 看懂設計規則。這個 repo 是什麼、誰來維護、怎麼更新。
       </p>
+      <div className="fu" style={{ marginTop: 40, display: 'flex', flexDirection: 'column', gap: 10, animationDelay: '0.45s' }}>
+        <a
+          href="https://github.com/1weiho/open-slide"
+          target="_blank"
+          rel="noreferrer"
+          style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: font.mono, fontSize: 22, color: c.muted, textDecoration: 'none' }}
+        >
+          <span style={{ color: 'var(--osd-accent)' }}>↗</span>
+          Built with open-slide
+        </a>
+        <span style={{ fontSize: 26, lineHeight: 1.5, color: c.muted }}>
+          用 React TSX 撰寫投影片，Git 版控，Vite 驅動。把簡報當程式碼維護。
+        </span>
+      </div>
     </div>
     <Footer />
   </div>
@@ -185,23 +200,23 @@ const Why: Page = () => (
         AI 做 UI 時，設計規則在哪？
       </h2>
       <p className="fu" style={{ fontSize: 38, lineHeight: 1.55, color: c.textSoft, maxWidth: 1400, margin: '0 0 48px', animationDelay: '0.2s' }}>
-        設計決策分散在不同系統——AI 看不到，每次都要重新解釋，輸出品質難以穩定。
+        設計決策分散在不同系統，AI 看不到，每次都要重新解釋，輸出品質難以穩定。
       </p>
       <div className="fu" style={{ display: 'flex', gap: 24, animationDelay: '0.3s' }}>
         <ProblemCard
           icon="🗂"
           title="設計規則分散各地"
-          desc="Figma、VSDS Foundation、元件庫——沒有統一入口，AI 無法直接讀取"
+          desc="Figma、VSDS Foundation、元件庫，沒有統一入口，AI 無法直接讀取"
         />
         <ProblemCard
           icon="🔁"
           title="每次都要重新解釋"
-          desc="哪些 token 可用、哪些元件適合——協作時每次都得手動告知"
+          desc="哪些 token 可用、哪些元件適合，協作時每次都得手動告知"
         />
         <ProblemCard
           icon="⚠️"
           title="輸出不穩定"
-          desc="缺乏一致的設計 context，AI 只能猜——錯誤 token、錯誤間距、大量修正"
+          desc="缺乏一致的設計 context，AI 只能猜：錯誤 token、錯誤間距、大量修正"
         />
       </div>
     </div>
@@ -224,7 +239,7 @@ const GoogleSpec: Page = () => (
         README.md 給人看；DESIGN.md 給 AI 看
       </h2>
       <p className="fu" style={{ fontSize: 38, lineHeight: 1.55, color: c.textSoft, maxWidth: 1500, margin: '0 0 40px', animationDelay: '0.2s' }}>
-        Google Labs 從 AI 設計工具 Stitch 發展出這個開源格式，2026 年開源——讓 AI coding agent 能真正理解設計意圖，而不是只知道數值。
+        Google Labs 從 AI 設計工具 Stitch 發展出這個開源格式，2026 年開源。讓 AI coding agent 能真正理解設計意圖，而不是只知道數值。
       </p>
       <div className="fu" style={{ display: 'flex', flexDirection: 'column', gap: 20, animationDelay: '0.3s' }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 20 }}>
@@ -240,6 +255,26 @@ const GoogleSpec: Page = () => (
           <span style={{ fontSize: 38, lineHeight: 1.5 }}>設計師寫，開發者和 AI 都受益</span>
         </div>
       </div>
+      <a
+        className="fu"
+        href="https://github.com/google-labs-code/design.md"
+        target="_blank"
+        rel="noreferrer"
+        style={{
+          marginTop: 36,
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 12,
+          fontFamily: font.mono,
+          fontSize: 26,
+          color: c.muted,
+          textDecoration: 'none',
+          animationDelay: '0.4s',
+        }}
+      >
+        <span style={{ color: 'var(--osd-accent)' }}>↗</span>
+        github.com/google-labs-code/design.md
+      </a>
     </div>
     <Footer />
   </div>
@@ -301,7 +336,7 @@ const DesignMdFormat: Page = () => (
         Token 值 ＋ 使用規則，缺一不可
       </h2>
       <p className="fu" style={{ fontSize: 36, lineHeight: 1.5, color: c.textSoft, maxWidth: 1500, margin: '0 0 40px', animationDelay: '0.15s' }}>
-        <span style={{ fontFamily: font.mono, color: 'var(--osd-accent)' }}>tokens.json</span> 只能說「是什麼」——DESIGN.md 同時說「為什麼」和「怎麼用」
+        <span style={{ fontFamily: font.mono, color: 'var(--osd-accent)' }}>tokens.json</span> 只能說「是什麼」；DESIGN.md 同時說「為什麼」和「怎麼用」
       </p>
       <div className="fu" style={{ display: 'flex', gap: 28, animationDelay: '0.25s' }}>
         <StructureBlock
@@ -327,6 +362,60 @@ const DesignMdFormat: Page = () => (
           ]}
         />
       </div>
+      <div
+        className="fu"
+        style={{
+          marginTop: 32,
+          padding: '20px 28px',
+          background: `${c.green}0d`,
+          border: `1px solid ${c.green}28`,
+          borderRadius: 'var(--osd-radius)',
+          display: 'flex',
+          alignItems: 'flex-start',
+          gap: 16,
+          animationDelay: '0.35s',
+        }}
+      >
+        <span style={{ color: c.green, fontFamily: font.mono, fontSize: 24, lineHeight: 1.6, flexShrink: 0 }}>為什麼不用 foundation token？</span>
+        <span style={{ fontSize: 28, lineHeight: 1.6, color: c.textSoft }}>
+          Foundation token（如 Style Dictionary、VSDS tokens）需要 build pipeline 才能解析，AI agent 無法直接讀取。YAML front matter 是純文字，開箱即用，不依賴任何工具鏈。
+        </span>
+      </div>
+    </div>
+    <Footer />
+  </div>
+);
+
+// ─── Section cover: edu-ui-design-md repo ────────────────────────────────────
+const RepoSectionCover: Page = () => (
+  <div style={fill}>
+    <Anim />
+    <Grid />
+    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'stretch' }}>
+      {/* Left: title */}
+      <div style={{ width: '42%', padding: '0 0 0 140px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 24 }}>
+        <div className="fu" style={{ fontFamily: font.mono, fontSize: 22, letterSpacing: '0.15em', textTransform: 'uppercase', color: c.muted, animationDelay: '0.05s' }}>
+          這個 repo
+        </div>
+        <h2
+          className="fu"
+          style={{ fontFamily: 'var(--osd-font-display)', fontSize: 88, fontWeight: 700, lineHeight: 1.05, letterSpacing: '-0.03em', margin: 0, animationDelay: '0.15s' }}
+        >
+          edu-ui-<br />
+          <span style={{ color: 'var(--osd-accent)' }}>design-md</span>
+        </h2>
+      </div>
+      {/* Right: screenshot */}
+      <div
+        className="fu"
+        style={{ flex: 1, padding: '80px 100px 80px 48px', display: 'flex', alignItems: 'center', animationDelay: '0.25s' }}
+      >
+        <img
+          src={repoScreenshot}
+          alt="edu-ui-design-md repo structure"
+          style={{ width: '100%', borderRadius: 12, border: `1px solid ${c.borderBright}`, boxShadow: '0 8px 48px rgba(0,0,0,0.5)' }}
+        />
+      </div>
     </div>
     <Footer />
   </div>
@@ -347,7 +436,7 @@ const WhatIsIt: Page = () => (
         一個 AI 看得懂的設計知識層
       </h2>
       <p className="fu" style={{ fontSize: 40, lineHeight: 1.55, color: c.textSoft, maxWidth: 1400, margin: '0 0 48px', animationDelay: '0.2s' }}>
-        把分散的設計脈絡——Figma、VSDS token、元件文件——整理成 AI 能直接讀懂的格式。
+        把分散的設計脈絡（Figma、VSDS token、元件文件）整理成 AI 能直接讀懂的格式。
       </p>
       <div className="fu" style={{ display: 'flex', flexDirection: 'column', gap: 20, animationDelay: '0.3s' }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 20 }}>
@@ -424,6 +513,40 @@ const Structure: Page = () => (
         <LayerCard tag="mappings/" title="對照查表" desc="VSDS token 架構、icon 規則、Figma 元件 URL" delay={0.4} />
         <LayerCard tag="components/" title="元件文件" desc="每個元件的 usage guidelines（自動產生）" delay={0.5} />
       </div>
+    </div>
+    <Footer />
+  </div>
+);
+
+// ─── Section intro: 作業慣例 ──────────────────────────────────────────────────
+const MaintainIntro: Page = () => (
+  <div style={fill}>
+    <Anim />
+    <Grid />
+    <div
+      style={{
+        position: 'absolute',
+        inset: 0,
+        padding: '0 140px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        gap: 32,
+      }}
+    >
+      <div className="fu" style={{ fontFamily: font.mono, fontSize: 22, letterSpacing: '0.15em', textTransform: 'uppercase', color: c.muted, animationDelay: '0.05s' }}>
+        除了 DESIGN.md
+      </div>
+      <h2
+        className="fu"
+        style={{ fontFamily: 'var(--osd-font-display)', fontSize: 100, fontWeight: 700, lineHeight: 1.05, letterSpacing: '-0.035em', margin: 0, animationDelay: '0.15s' }}
+      >
+        這個 Repo<br />
+        <span style={{ color: 'var(--osd-accent)' }}>還做了什麼？</span>
+      </h2>
+      <p className="fu" style={{ fontSize: 38, lineHeight: 1.6, color: c.textSoft, maxWidth: 1300, animationDelay: '0.3s' }}>
+        我定義了基礎的作業慣例：哪些檔案手動編輯、哪些自動產生、什麼時候要更新、如何紀錄變更。
+      </p>
     </div>
     <Footer />
   </div>
@@ -602,28 +725,20 @@ const Hooks: Page = () => (
         <div style={{ height: 1, background: c.border }} />
         <HookRow tag="結束時" title="提醒確認文件是否同步" desc="有非文件檔案變動時，提示是否需要更新 README / CHANGELOG" delay={0.4} />
       </div>
+      <div className="fu" style={{ marginTop: 40, display: 'flex', gap: 48, animationDelay: '0.55s' }}>
+        <span style={{ fontFamily: font.mono, fontSize: 22, color: c.muted }}>
+          <span style={{ color: c.textSoft }}>commit</span>：把目前的修改存成一個版本紀錄
+        </span>
+        <span style={{ fontFamily: font.mono, fontSize: 22, color: c.muted }}>
+          <span style={{ color: c.textSoft }}>push</span>：將本地的版本紀錄上傳到遠端 repo
+        </span>
+      </div>
     </div>
     <Footer />
   </div>
 );
 
-// ─── Page 7: 何時記 CHANGELOG ─────────────────────────────────────────────────
-// Budget (padding 120px T/B → usable 840px):
-// eyebrow 29 + gap 32 + heading 88 + gap 48 + two-col grid ~340px = 537px ✅
-
-const YesItem = ({ text }: { text: string }) => (
-  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 16 }}>
-    <span style={{ color: c.green, fontSize: 34, lineHeight: 1.5, flexShrink: 0 }}>✓</span>
-    <span style={{ fontSize: 34, lineHeight: 1.5, color: c.textSoft }}>{text}</span>
-  </div>
-);
-
-const NoItem = ({ text }: { text: string }) => (
-  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 16 }}>
-    <span style={{ color: c.muted, fontSize: 34, lineHeight: 1.5, flexShrink: 0 }}>✕</span>
-    <span style={{ fontSize: 34, lineHeight: 1.5, color: c.muted }}>{text}</span>
-  </div>
-);
+// ─── Page 7: 模板化 ───────────────────────────────────────────────────────────
 
 const Changelog: Page = () => (
   <div style={fill}>
@@ -631,23 +746,28 @@ const Changelog: Page = () => (
     <Grid />
     <div style={{ position: 'absolute', inset: 0, padding: '120px 140px', display: 'flex', flexDirection: 'column' }}>
       <div className="fu" style={{ fontFamily: font.mono, fontSize: 24, letterSpacing: '0.15em', textTransform: 'uppercase', color: c.muted, marginBottom: 32 }}>
-        09 / CHANGELOG
+        09 / 模板化
       </div>
-      <h2 className="fu" style={{ fontFamily: 'var(--osd-font-display)', fontSize: 80, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.03em', margin: '0 0 48px', animationDelay: '0.1s' }}>
-        什麼時候要記錄
+      <h2 className="fu" style={{ fontFamily: 'var(--osd-font-display)', fontSize: 80, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.03em', margin: '0 0 40px', animationDelay: '0.1s' }}>
+        新專案，一鍵安裝基礎設定
       </h2>
-      <div className="fu" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, animationDelay: '0.2s' }}>
-        <div style={{ background: c.surface, border: `1px solid ${c.borderBright}`, borderRadius: 'var(--osd-radius)', padding: '28px 32px', display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <div style={{ fontFamily: font.mono, fontSize: 24, color: c.green, letterSpacing: '0.06em', marginBottom: 4 }}>要記的</div>
-          <YesItem text="Repo 結構有調整（新增 / 刪除資料夾）" />
-          <YesItem text="DESIGN.md 有重大內容更新" />
-          <YesItem text="新增或修改 script / skill" />
-          <YesItem text="做了重要決定，想留下原因" />
+      <p className="fu" style={{ fontSize: 38, lineHeight: 1.6, color: c.textSoft, maxWidth: 1400, margin: '0 0 40px', animationDelay: '0.2s' }}>
+        把基礎文件與 skill 整理成一個 template repo，之後開新 repo 只要一個步驟。
+      </p>
+      <div className="fu" style={{ display: 'flex', flexDirection: 'column', gap: 20, animationDelay: '0.3s' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 20 }}>
+          <span style={{ color: 'var(--osd-accent)', fontSize: 36, lineHeight: 1.5, flexShrink: 0 }}>→</span>
+          <span style={{ fontSize: 38, lineHeight: 1.5 }}>
+            建立了 <span style={{ fontFamily: font.mono, color: 'var(--osd-accent)' }}>edu-ui-repo-template</span> repo
+          </span>
         </div>
-        <div style={{ background: c.surface, border: `1px solid ${c.border}`, borderRadius: 'var(--osd-radius)', padding: '28px 32px', display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <div style={{ fontFamily: font.mono, fontSize: 24, color: c.muted, letterSpacing: '0.06em', marginBottom: 4 }}>不用記的</div>
-          <NoItem text="Generated files 的例行更新" />
-          <NoItem text="小幅文字修正" />
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 20 }}>
+          <span style={{ color: 'var(--osd-accent)', fontSize: 36, lineHeight: 1.5, flexShrink: 0 }}>→</span>
+          <span style={{ fontSize: 38, lineHeight: 1.5 }}>請 Claude Code 讀這個 repo，自動安裝好基礎文件與 skill</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 20 }}>
+          <span style={{ color: 'var(--osd-accent)', fontSize: 36, lineHeight: 1.5, flexShrink: 0 }}>→</span>
+          <span style={{ fontSize: 38, lineHeight: 1.5 }}>之後每個新 repo 都有一致的起點</span>
         </div>
       </div>
     </div>
@@ -704,4 +824,4 @@ export const meta: SlideMeta = {
   createdAt: '2026-06-11T17:26:09.678Z',
 };
 
-export default [Cover, Why, GoogleSpec, DesignMdFormat, WhatIsIt, Structure, AutoVsManual, HowToUpdate, Hooks, Changelog, Closing] satisfies Page[];
+export default [Cover, Why, GoogleSpec, DesignMdFormat, WhatIsIt, RepoSectionCover, Structure, AutoVsManual, HowToUpdate, MaintainIntro, Hooks, Changelog, Closing] satisfies Page[];
