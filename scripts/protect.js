@@ -29,13 +29,22 @@ const gate = `
 (function () {
   var HASH = '${expectedHash}';
   var KEY = 'slide-auth';
-  if (sessionStorage.getItem(KEY) === HASH) { remove(); return; }
+  var FOLDER = '?f=f-3f4148a6';
   function remove() { var g = document.getElementById('pw-gate'); if (g) g.remove(); }
+  function goPublish() {
+    var loc = window.location;
+    if (!loc.pathname.includes('/s/') && !loc.search.includes('f=')) {
+      window.location.replace(loc.pathname + FOLDER);
+      return true;
+    }
+    return false;
+  }
+  if (sessionStorage.getItem(KEY) === HASH) { remove(); goPublish(); return; }
   async function check() {
     var val = document.getElementById('pw-input').value;
     var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
     var hex = Array.from(new Uint8Array(buf)).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
-    if (hex === HASH) { sessionStorage.setItem(KEY, HASH); remove(); }
+    if (hex === HASH) { sessionStorage.setItem(KEY, HASH); if (!goPublish()) remove(); }
     else {
       var err = document.getElementById('pw-err');
       err.style.opacity = '1';
