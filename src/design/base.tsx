@@ -71,6 +71,23 @@ export const Grid = () => (
   />
 );
 
+// ─── Copy-link interceptor：點擊「複製連結」按鈕時同時另開視窗 ────────────────
+if (typeof document !== 'undefined') {
+  const LABELS = ['複製連結', 'Copy link', '复制链接', 'リンクをコピー'];
+  document.addEventListener('click', (e: MouseEvent) => {
+    const btn = (e.target as Element).closest('button[aria-label]');
+    if (!btn || !LABELS.includes(btn.getAttribute('aria-label') ?? '')) return;
+    // 等 React 的 onClick 完成後，改寫剪貼簿為第一頁 URL，並開新視窗
+    setTimeout(async () => {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('p');
+      const firstPageUrl = url.href;
+      try { await navigator.clipboard.writeText(firstPageUrl); } catch {}
+      window.open(firstPageUrl, '_blank', 'noopener');
+    }, 0);
+  });
+}
+
 // ─── Footer (label 由各簡報傳入) ──────────────────────────────────────────────
 export const Footer = ({ label }: { label: string }) => {
   const { current, total } = useSlidePageNumber();
