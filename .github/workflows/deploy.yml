@@ -30,6 +30,7 @@ jobs:
       - run: npm run build
         env:
           GITHUB_ACTIONS: true
+          SLIDE_PASSWORD: ${{ secrets.SLIDE_PASSWORD }}
 
       - uses: actions/upload-pages-artifact@v3
         with:
