@@ -1,104 +1,20 @@
 import type { DesignSystem, Page, SlideMeta, SlideTransition } from '@open-slide/core';
-import { useSlidePageNumber } from '@open-slide/core';
 import repoScreenshot from '../../assets/repo-screenshot.png';
+import {
+  baseDesign, baseC, baseFont, fill,
+  Anim, Grid, EO, EI,
+  Footer as BaseFooter,
+} from '../../src/design/base';
 
 // ─── Design system tokens ────────────────────────────────────────────────────
-export const design: DesignSystem = {
-  palette: {
-    bg: '#080d1c',
-    text: '#e2e6f5',
-    accent: '#7c6ef5',
-  },
-  fonts: {
-    display: '"SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
-    body: '"SF Pro Text", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
-  },
-  typeScale: {
-    hero: 136,
-    body: 40,
-  },
-  radius: 14,
-};
+export const design: DesignSystem = { ...baseDesign };
 
 // ─── Local constants ─────────────────────────────────────────────────────────
-const c = {
-  surface: '#0e1428',
-  muted: '#5a6080',
-  textSoft: '#a8b0d0',
-  border: 'rgba(124, 110, 245, 0.12)',
-  borderBright: 'rgba(124, 110, 245, 0.28)',
-  green: '#34d399',
-  amber: '#fbbf24',
-};
-
-const font = {
-  display: design.fonts.display,
-  body: design.fonts.body,
-  mono: '"JetBrains Mono", "SF Mono", ui-monospace, monospace',
-};
-
-const fill: React.CSSProperties = {
-  width: '100%',
-  height: '100%',
-  background: 'var(--osd-bg)',
-  color: 'var(--osd-text)',
-  fontFamily: 'var(--osd-font-body)',
-  overflow: 'hidden',
-  position: 'relative',
-};
-
-// ─── Shared animation styles (injected per page) ──────────────────────────────
-const animCss = `
-  @keyframes fu { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-  .fu { opacity: 0; animation: fu 0.65s cubic-bezier(0,0,0.2,1) forwards; }
-`;
-const Anim = () => <style>{animCss}</style>;
-
-// ─── Grid background ──────────────────────────────────────────────────────────
-const Grid = () => (
-  <div
-    style={{
-      position: 'absolute',
-      inset: 0,
-      backgroundImage:
-        'linear-gradient(rgba(124,110,245,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(124,110,245,0.045) 1px, transparent 1px)',
-      backgroundSize: '80px 80px',
-      maskImage: 'radial-gradient(ellipse at 30% 40%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 70%)',
-      WebkitMaskImage: 'radial-gradient(ellipse at 30% 40%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 70%)',
-    }}
-  />
-);
-
-// ─── Page footer ──────────────────────────────────────────────────────────────
-const Footer = () => {
-  const { current, total } = useSlidePageNumber();
-  return (
-    <div
-      style={{
-        position: 'absolute',
-        bottom: 56,
-        left: 140,
-        right: 140,
-        display: 'flex',
-        justifyContent: 'space-between',
-        fontFamily: font.mono,
-        fontSize: 22,
-        color: c.muted,
-        letterSpacing: '0.05em',
-      }}
-    >
-      <span>edu-ui-design-md</span>
-      <span>
-        {String(current).padStart(2, '0')} / {String(total).padStart(2, '0')}
-      </span>
-    </div>
-  );
-};
+const c = { ...baseC };
+const font = { ...baseFont };
+const Footer = () => <BaseFooter label="edu-ui-design-md" />;
 
 // ─── Transitions ──────────────────────────────────────────────────────────────
-const EO = 'cubic-bezier(0,0,0.2,1)';
-const EI = 'cubic-bezier(0.4,0,1,1)';
-
 export const transition: SlideTransition = {
   duration: 200,
   exit: { duration: 140, easing: EI, keyframes: [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-4px)' }] },
@@ -141,19 +57,10 @@ const Cover: Page = () => (
       >
         讓 AI 看懂設計規則。這個 repo 是什麼、誰來維護、怎麼更新。
       </p>
-      <div className="fu" style={{ marginTop: 40, display: 'flex', flexDirection: 'column', gap: 10, animationDelay: '0.45s' }}>
-        <a
-          href="https://github.com/1weiho/open-slide"
-          target="_blank"
-          rel="noreferrer"
-          style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: font.mono, fontSize: 22, color: c.muted, textDecoration: 'none' }}
-        >
-          <span style={{ color: 'var(--osd-accent)' }}>↗</span>
-          Built with open-slide
-        </a>
-        <span style={{ fontSize: 26, lineHeight: 1.5, color: c.muted }}>
-          用 React TSX 撰寫投影片，Git 版控，Vite 驅動。把簡報當程式碼維護。
-        </span>
+      <div className="fu" style={{ display: 'flex', alignItems: 'center', gap: 24, marginTop: 48, animationDelay: '0.42s' }}>
+        <span style={{ fontFamily: font.mono, fontSize: 22, color: c.muted }}>Vic Wang</span>
+        <span style={{ width: 4, height: 4, borderRadius: '50%', background: c.muted, flexShrink: 0 }} />
+        <span style={{ fontFamily: font.mono, fontSize: 22, color: c.muted }}>June 12, 2026</span>
       </div>
     </div>
     <Footer />
@@ -800,12 +707,12 @@ const Closing: Page = () => (
         className="fu"
         style={{ fontFamily: 'var(--osd-font-display)', fontSize: 100, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.035em', margin: '0 0 48px', animationDelay: '0.15s' }}
       >
-        設計師更新，
+        設計脈絡在，
         <br />
-        <span style={{ color: 'var(--osd-accent)' }}>AI 就能懂。</span>
+        <span style={{ color: 'var(--osd-accent)' }}>AI 輸出才穩定。</span>
       </h2>
       <p className="fu" style={{ fontSize: 40, lineHeight: 1.6, color: c.textSoft, maxWidth: 1300, animationDelay: '0.3s' }}>
-        保持 DESIGN.md 更新，是讓 AI-assisted 設計流程正常運作最重要的一件事。
+        從知識層結構到自動化機制，讓 AI 每次都有可靠的設計規則可以參考。
       </p>
     </div>
     <Footer />

@@ -1,6 +1,10 @@
 import type { DesignSystem, Page, SlideMeta, SlideTransition } from '@open-slide/core';
-import { useSlidePageNumber } from '@open-slide/core';
 import { useState } from 'react';
+import {
+  baseDesign, baseC, baseFont, fill,
+  Anim, Grid, EO, EI,
+  Footer as BaseFooter,
+} from '../../src/design/base';
 
 export const notes: (string | undefined)[] = [
   undefined,
@@ -46,101 +50,14 @@ edu-ui-test`,
 
 
 // ─── Design system tokens ────────────────────────────────────────────────────
-export const design: DesignSystem = {
-  palette: {
-    bg: '#080d1c',
-    text: '#e2e6f5',
-    accent: '#7c6ef5',
-  },
-  fonts: {
-    display: '"SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
-    body: '"SF Pro Text", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
-  },
-  typeScale: {
-    hero: 136,
-    body: 40,
-  },
-  radius: 14,
-};
+export const design: DesignSystem = { ...baseDesign };
 
 // ─── Local constants ─────────────────────────────────────────────────────────
-const c = {
-  surface: '#0e1428',
-  muted: '#5a6080',
-  textSoft: '#a8b0d0',
-  border: 'rgba(124, 110, 245, 0.12)',
-  borderBright: 'rgba(124, 110, 245, 0.28)',
-  green: '#34d399',
-  amber: '#fbbf24',
-};
-
-const font = {
-  display: design.fonts.display,
-  body: design.fonts.body,
-  mono: '"JetBrains Mono", "SF Mono", ui-monospace, monospace',
-};
-
-const fill: React.CSSProperties = {
-  width: '100%',
-  height: '100%',
-  background: 'var(--osd-bg)',
-  color: 'var(--osd-text)',
-  fontFamily: 'var(--osd-font-body)',
-  overflow: 'hidden',
-  position: 'relative',
-};
-
-// ─── Shared animation styles ──────────────────────────────────────────────────
-const animCss = `
-  @keyframes fu { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-  .fu { opacity: 0; animation: fu 0.65s cubic-bezier(0,0,0.2,1) forwards; }
-`;
-const Anim = () => <style>{animCss}</style>;
-
-// ─── Grid background ──────────────────────────────────────────────────────────
-const Grid = () => (
-  <div
-    style={{
-      position: 'absolute',
-      inset: 0,
-      backgroundImage:
-        'linear-gradient(rgba(124,110,245,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(124,110,245,0.045) 1px, transparent 1px)',
-      backgroundSize: '80px 80px',
-      maskImage: 'radial-gradient(ellipse at 30% 40%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 70%)',
-      WebkitMaskImage: 'radial-gradient(ellipse at 30% 40%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 70%)',
-    }}
-  />
-);
-
-// ─── Page footer ──────────────────────────────────────────────────────────────
-const Footer = () => {
-  const { current, total } = useSlidePageNumber();
-  return (
-    <div
-      style={{
-        position: 'absolute',
-        bottom: 56,
-        left: 140,
-        right: 140,
-        display: 'flex',
-        justifyContent: 'space-between',
-        fontFamily: font.mono,
-        fontSize: 22,
-        color: c.muted,
-        letterSpacing: '0.05em',
-      }}
-    >
-      <span>edu-ui-workflow</span>
-      <span>
-        {String(current).padStart(2, '0')} / {String(total).padStart(2, '0')}
-      </span>
-    </div>
-  );
-};
+const c = { ...baseC };
+const font = { ...baseFont };
+const Footer = () => <BaseFooter label="edu-ui-workflow" />;
 
 // ─── Transitions ──────────────────────────────────────────────────────────────
-const EO = 'cubic-bezier(0,0,0.2,1)';
-const EI = 'cubic-bezier(0.4,0,1,1)';
 
 export const transition: SlideTransition = {
   duration: 200,
@@ -180,6 +97,11 @@ const Cover: Page = () => (
       <p className="fu" style={{ fontSize: 38, lineHeight: 1.6, color: c.textSoft, maxWidth: 900, animationDelay: '0.3s' }}>
         VSCode、GitHub、repo 建立到模板使用，一次學完。
       </p>
+      <div className="fu" style={{ display: 'flex', alignItems: 'center', gap: 24, marginTop: 56, animationDelay: '0.42s' }}>
+        <span style={{ fontFamily: font.mono, fontSize: 22, color: c.muted }}>Vic Wang</span>
+        <span style={{ width: 4, height: 4, borderRadius: '50%', background: c.muted, flexShrink: 0 }} />
+        <span style={{ fontFamily: font.mono, fontSize: 22, color: c.muted }}>June 17, 2026</span>
+      </div>
     </div>
     <Footer />
   </div>
