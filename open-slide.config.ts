@@ -6,7 +6,7 @@ const openSlideConfig: OpenSlideConfig = {
   base: isProduction ? '/edu-ui-slides/' : '/',
   build: isProduction ? {
     showSlideUi: false,
-    showSlideBrowser: false,
+    showSlideBrowser: true,
   } : {},
 };
 

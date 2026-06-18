@@ -1,6 +1,14 @@
 {
   "folders": [
     {
+      "id": "f-draft",
+      "name": "Draft",
+      "icon": {
+        "type": "color",
+        "value": "#7f8c8d"
+      }
+    },
+    {
       "id": "f-3f4148a6",
       "name": "Publish",
       "icon": {
