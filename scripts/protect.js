@@ -4,6 +4,7 @@
 // 若未設定，預設為 vsds2026
 
 import { readFileSync, writeFileSync, copyFileSync } from 'fs';
+import { resolve } from 'path';
 import { createHash } from 'crypto';
 
 const password = process.env.SLIDE_PASSWORD || 'vsds2026';
@@ -63,7 +64,25 @@ writeFileSync(htmlPath, html.replace('</body>', gate + '\n</body>'));
 
 copyFileSync('dist/index.html', 'dist/404.html');
 
+// Replace favicon
+copyFileSync(resolve('assets/favicon.png'), 'dist/favicon.png');
+writeFileSync(
+  'dist/index.html',
+  readFileSync('dist/index.html', 'utf8').replace(
+    /<link rel="icon"[^>]*>/,
+    '<link rel="icon" type="image/png" href="./favicon.png" />',
+  ),
+);
+writeFileSync(
+  'dist/404.html',
+  readFileSync('dist/404.html', 'utf8').replace(
+    /<link rel="icon"[^>]*>/,
+    '<link rel="icon" type="image/png" href="./favicon.png" />',
+  ),
+);
+
 console.log('✓ password gate injected');
 console.log('✓ 404.html created for SPA routing');
+console.log('✓ favicon replaced');
 console.log(`  password : "${password}"`);
 console.log(`  hash     : ${expectedHash}`);
