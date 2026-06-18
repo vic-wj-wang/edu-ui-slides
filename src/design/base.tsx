@@ -1,5 +1,6 @@
 import type { DesignSystem } from '@open-slide/core';
 import { useSlidePageNumber } from '@open-slide/core';
+import { useSearchParams } from 'react-router-dom';
 
 // ─── Design system tokens ─────────────────────────────────────────────────────
 export const baseDesign: DesignSystem = {
@@ -93,6 +94,34 @@ export const Footer = ({ label }: { label: string }) => {
         {String(current).padStart(2, '0')} / {String(total).padStart(2, '0')}
       </span>
     </div>
+  );
+};
+
+// ─── Back to first page button ────────────────────────────────────────────────
+export const BackToFirstButton = () => {
+  const [, setSearchParams] = useSearchParams();
+  return (
+    <button
+      type="button"
+      onClick={() => setSearchParams({ p: '1' })}
+      style={{
+        position: 'absolute',
+        top: 48,
+        right: 140,
+        fontFamily: baseFont.mono,
+        fontSize: 18,
+        color: baseC.muted,
+        background: 'none',
+        border: 'none',
+        cursor: 'pointer',
+        padding: '8px 0',
+        letterSpacing: '0.05em',
+      }}
+      onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = baseC.textSoft; }}
+      onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = baseC.muted; }}
+    >
+      ⬅︎ 回到首頁
+    </button>
   );
 };
 

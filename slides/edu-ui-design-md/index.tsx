@@ -3,7 +3,7 @@ import repoScreenshot from '../../assets/repo-screenshot.png';
 import {
   baseDesign, baseC, baseFont, fill,
   Anim, Grid, EO, EI,
-  Footer as BaseFooter,
+  Footer as BaseFooter, BackToFirstButton,
 } from '../../src/design/base';
 
 // ─── Design system tokens ────────────────────────────────────────────────────
@@ -715,6 +715,7 @@ const Closing: Page = () => (
         從知識層結構到自動化機制，讓 AI 每次都有可靠的設計規則可以參考。
       </p>
     </div>
+    <BackToFirstButton />
     <Footer />
   </div>
 );

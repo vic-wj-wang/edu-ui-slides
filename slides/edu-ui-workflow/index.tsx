@@ -3,7 +3,7 @@ import { useState } from 'react';
 import {
   baseDesign, baseC, baseFont, fill,
   Anim, Grid, EO, EI,
-  Footer as BaseFooter,
+  Footer as BaseFooter, BackToFirstButton,
 } from '../../src/design/base';
 
 export const notes: (string | undefined)[] = [
@@ -1132,6 +1132,7 @@ const Closing: Page = () => (
         有任何問題，隨時提出來討論。
       </p>
     </div>
+    <BackToFirstButton />
     <Footer />
   </div>
 );
