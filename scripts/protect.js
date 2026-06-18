@@ -58,28 +58,27 @@ const gate = `
 </script>
 `;
 
+// 停用全螢幕 API（viewer-only 模式下 Player 預設會進入全螢幕）
+const noFullscreen = `<script>Element.prototype.requestFullscreen = async function(){};</script>`;
+
 const htmlPath = 'dist/index.html';
 const html = readFileSync(htmlPath, 'utf8');
-writeFileSync(htmlPath, html.replace('</body>', gate + '\n</body>'));
+writeFileSync(htmlPath, html.replace('</head>', noFullscreen + '\n</head>').replace('</body>', gate + '\n</body>'));
 
-copyFileSync('dist/index.html', 'dist/404.html');
+const dist404 = readFileSync(htmlPath, 'utf8');
+writeFileSync('dist/404.html', dist404);
 
-// Replace favicon
+// Replace favicon in both files
 copyFileSync(resolve('assets/favicon.png'), 'dist/favicon.png');
-writeFileSync(
-  'dist/index.html',
-  readFileSync('dist/index.html', 'utf8').replace(
-    /<link rel="icon"[^>]*>/,
-    '<link rel="icon" type="image/png" href="./favicon.png" />',
-  ),
-);
-writeFileSync(
-  'dist/404.html',
-  readFileSync('dist/404.html', 'utf8').replace(
-    /<link rel="icon"[^>]*>/,
-    '<link rel="icon" type="image/png" href="./favicon.png" />',
-  ),
-);
+for (const file of ['dist/index.html', 'dist/404.html']) {
+  writeFileSync(
+    file,
+    readFileSync(file, 'utf8').replace(
+      /<link rel="icon"[^>]*>/,
+      '<link rel="icon" type="image/png" href="./favicon.png" />',
+    ),
+  );
+}
 
 console.log('✓ password gate injected');
 console.log('✓ 404.html created for SPA routing');
