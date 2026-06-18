@@ -7,7 +7,11 @@ import { readFileSync, writeFileSync, copyFileSync } from 'fs';
 import { resolve } from 'path';
 import { createHash } from 'crypto';
 
-const password = process.env.SLIDE_PASSWORD || 'vsds2026';
+const password = process.env.SLIDE_PASSWORD;
+if (!password) {
+  console.error('錯誤：請設定 SLIDE_PASSWORD 環境變數再執行 build。');
+  process.exit(1);
+}
 const expectedHash = createHash('sha256').update(password).digest('hex');
 
 const gate = `
@@ -83,5 +87,4 @@ for (const file of ['dist/index.html', 'dist/404.html']) {
 console.log('✓ password gate injected');
 console.log('✓ 404.html created for SPA routing');
 console.log('✓ favicon replaced');
-console.log(`  password : "${password}"`);
 console.log(`  hash     : ${expectedHash}`);

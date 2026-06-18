@@ -11,7 +11,7 @@
 ### Added
 
 - **GitHub Pages 部署**：新增 `.github/workflows/deploy.yml`，推送 main 自動觸發 build 與部署。
-- **密碼保護**：`scripts/protect.js` 在 build 後注入密碼 gate，密碼以 SHA-256 驗證，預設 `vsds2026`，可透過 `SLIDE_PASSWORD` secret 設定。
+- **密碼保護**：`scripts/protect.js` 在 build 後注入密碼 gate，密碼以 SHA-256 驗證。需透過 `SLIDE_PASSWORD` GitHub Secret 設定，未設定時 build 會中斷。
 - **Draft / Publish 資料夾結構**：`slides/.folders.json` 新增 Draft 與 Publish 兩個資料夾；新增 `scripts/publish-slide.js`，執行 `node scripts/publish-slide.js <slideId>` 可將簡報從 Draft 移至 Publish，`--unpublish` 可反向操作。
 - **回到首頁按鈕**：`src/design/base.tsx` 新增 `BackToFirstButton` 元件，顯示於每支簡報最後一頁（Closing）右上角，點擊跳回第一頁。
 - **自訂 favicon**：`assets/favicon.png` 加入品牌圖示，build 時由 `scripts/protect.js` 替換 `dist/index.html` 的 favicon。
