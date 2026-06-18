@@ -30,7 +30,8 @@ jobs:
       - run: npm run build
         env:
           GITHUB_ACTIONS: true
-          SLIDE_PASSWORD: ${{ secrets.UI_SLIDES_DEFAULT_PASSWORD }}
+          UI_SLIDES_DEFAULT_PASSWORD: ${{ secrets.UI_SLIDES_DEFAULT_PASSWORD }}
+          # 單支簡報密碼（選填）：SLIDE_PASSWORD_EDU_UI_WORKFLOW: ${{ secrets.SLIDE_PASSWORD_EDU_UI_WORKFLOW }}
 
       - uses: actions/upload-pages-artifact@v3
         with:
