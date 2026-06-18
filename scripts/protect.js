@@ -3,7 +3,7 @@
 // 設定密碼：SLIDE_PASSWORD=yourpassword npm run build
 // 若未設定，預設為 vsds2026
 
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, copyFileSync } from 'fs';
 import { createHash } from 'crypto';
 
 const password = process.env.SLIDE_PASSWORD || 'vsds2026';
@@ -52,6 +52,9 @@ const htmlPath = 'dist/index.html';
 const html = readFileSync(htmlPath, 'utf8');
 writeFileSync(htmlPath, html.replace('</body>', gate + '\n</body>'));
 
+copyFileSync('dist/index.html', 'dist/404.html');
+
 console.log('✓ password gate injected');
+console.log('✓ 404.html created for SPA routing');
 console.log(`  password : "${password}"`);
 console.log(`  hash     : ${expectedHash}`);
