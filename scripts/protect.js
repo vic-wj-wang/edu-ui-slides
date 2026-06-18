@@ -6,7 +6,7 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { createHash } from 'crypto';
 
-const password = process.env.SLIDE_PASSWORD ?? 'vsds2026';
+const password = process.env.SLIDE_PASSWORD || 'vsds2026';
 const expectedHash = createHash('sha256').update(password).digest('hex');
 
 const gate = `
