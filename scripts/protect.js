@@ -40,7 +40,8 @@ for (const [key, val] of Object.entries(process.env)) {
 const gate = `
 <style>
   #pw-gate input:focus { border-color: rgba(92,92,240,0.8) !important; }
-  #pw-gate button:hover { background: #4a4adb !important; }
+  #pw-gate button:not(:disabled):hover { background: #4a4adb !important; }
+  #pw-gate button:disabled { opacity: 0.6; cursor: not-allowed !important; }
 </style>
 <div id="pw-gate" style="position:fixed;inset:0;background:#080d1c;display:flex;align-items:center;justify-content:center;z-index:99999;font-family:system-ui,sans-serif;">
   <div style="display:flex;flex-direction:column;align-items:center;gap:20px;width:100%;max-width:380px;padding:0 32px;box-sizing:border-box;">
@@ -49,7 +50,7 @@ const gate = `
     <input id="pw-input" type="password" placeholder="輸入密碼" autocomplete="current-password"
       style="width:100%;padding:14px 20px;background:#0e1428;border:1px solid rgba(92,92,240,0.32);border-radius:10px;color:#e2e6f5;font-size:18px;outline:none;box-sizing:border-box;" />
     <button id="pw-btn"
-      style="width:100%;padding:14px;background:#5c5cf0;border:none;border-radius:10px;color:#fff;font-size:18px;font-weight:600;cursor:pointer;">進入</button>
+      style="width:100%;padding:14px;background:#5c5cf0;border:none;border-radius:10px;color:#fff;font-size:18px;font-weight:600;cursor:pointer;transition:background 0.2s;">進入</button>
     <div id="pw-err" style="color:#fbbf24;font-size:14px;opacity:0;transition:opacity 0.2s;">密碼錯誤，請重試</div>
   </div>
 </div>
@@ -93,26 +94,48 @@ const gate = `
   if (isAuthorized()) { remove(); goPublish(); return; }
 
   async function check() {
-    var val = document.getElementById('pw-input').value;
+    var input = document.getElementById('pw-input');
+    var btn = document.getElementById('pw-btn');
+    var err = document.getElementById('pw-err');
+    var val = input.value;
+    if (!val) return;
+
+    // 驗證中狀態
+    btn.disabled = true;
+    input.disabled = true;
+    btn.textContent = '驗證中…';
+    err.style.opacity = '0';
+
     var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
     var hex = Array.from(new Uint8Array(buf)).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
 
     if (hex === DEFAULT_HASH) {
+      btn.textContent = '✓';
+      btn.style.background = '#16a34a';
       sessionStorage.setItem(DEFAULT_KEY, DEFAULT_HASH);
-      if (!goPublish()) remove();
+      setTimeout(function () { if (!goPublish()) remove(); }, 400);
       return;
     }
 
     // 檢查是否符合某支簡報的專屬密碼
     for (var slideId in SLIDE_HASHES) {
       if (hex === SLIDE_HASHES[slideId]) {
+        btn.textContent = '✓';
+        btn.style.background = '#16a34a';
         sessionStorage.setItem('slide-auth-' + slideId, hex);
-        window.location.replace(window.location.pathname.replace(/\/s\/[^/]+/, '') + 's/' + slideId);
+        setTimeout(function () {
+          window.location.replace(window.location.pathname.replace(/\/s\/[^/]+/, '') + 's/' + slideId);
+        }, 400);
         return;
       }
     }
 
-    var err = document.getElementById('pw-err');
+    // 錯誤狀態：恢復輸入欄位
+    btn.disabled = false;
+    input.disabled = false;
+    btn.textContent = '進入';
+    input.value = '';
+    input.focus();
     err.style.opacity = '1';
     setTimeout(function () { err.style.opacity = '0'; }, 2000);
   }
