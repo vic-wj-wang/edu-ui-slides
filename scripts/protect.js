@@ -67,7 +67,7 @@ const gate = `
   function remove() { var g = document.getElementById('pw-gate'); if (g) g.remove(); }
 
   function currentSlideId() {
-    var m = window.location.pathname.match(/\/s\/([^/]+)/);
+    var m = window.location.pathname.match(new RegExp('/s/([^/]+)'));
     return m ? m[1] : null;
   }
 
@@ -124,7 +124,7 @@ const gate = `
         btn.style.background = '#16a34a';
         sessionStorage.setItem('slide-auth-' + slideId, hex);
         setTimeout(function () {
-          window.location.replace(window.location.pathname.replace(/\/s\/[^/]+/, '') + 's/' + slideId);
+          window.location.replace(window.location.pathname.replace(new RegExp('/s/[^/]+'), '') + 's/' + slideId);
         }, 400);
         return;
       }
