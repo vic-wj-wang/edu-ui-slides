@@ -142,6 +142,42 @@ export const BackToFirstButton = () => {
   );
 };
 
+// ─── Light theme ─────────────────────────────────────────────────────────────
+export const lightDesign: DesignSystem = {
+  palette: {
+    bg: '#f7f8fc',
+    text: '#1a1d2e',
+    accent: '#4040d8',
+  },
+  fonts: baseDesign.fonts,
+  typeScale: baseDesign.typeScale,
+  radius: baseDesign.radius,
+};
+
+export const lightC = {
+  surface: '#edf0f8',
+  muted: '#6870a0',
+  textSoft: '#3a4268',
+  border: 'rgba(64, 64, 216, 0.12)',
+  borderBright: 'rgba(64, 64, 216, 0.30)',
+  green: '#16a34a',
+  amber: '#c2790a',
+};
+
+export const LightGrid = () => (
+  <div
+    style={{
+      position: 'absolute',
+      inset: 0,
+      backgroundImage:
+        'linear-gradient(rgba(64,64,216,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(64,64,216,0.07) 1px, transparent 1px)',
+      backgroundSize: '80px 80px',
+      maskImage: 'radial-gradient(ellipse at 30% 40%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 70%)',
+      WebkitMaskImage: 'radial-gradient(ellipse at 30% 40%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 70%)',
+    }}
+  />
+);
+
 // ─── Easing constants ─────────────────────────────────────────────────────────
 export const EO = 'cubic-bezier(0,0,0.2,1)';
 export const EI = 'cubic-bezier(0.4,0,1,1)';
